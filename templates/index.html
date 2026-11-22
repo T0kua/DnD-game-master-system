@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D — стол</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="landing">
+    <h1>⚔ <span id="campaign">Загрузка…</span></h1>
+    <p class="muted">Ссылки на листы персонажей — передайте каждому игроку свою:</p>
+    <div id="links" class="links"></div>
+    <p class="muted" style="margin-top:24px">
+      <a id="maplink" href="/map">Открыть трансляцию карты (второй экран)</a>
+    </p>
+  </div>
+  <script>
+    async function refresh() {
+      try {
+        const r = await fetch('/api/state', {cache: 'no-store'});
+        const s = await r.json();
+        document.getElementById('campaign').textContent = s.campaign || 'Кампания';
+        const box = document.getElementById('links');
+        if (!s.characters || !s.characters.length) {
+          box.innerHTML = '<div class="card muted">Пока нет персонажей.</div>';
+          return;
+        }
+        box.innerHTML = s.characters.map(c => `
+          <div class="card link-row">
+            <div>
+              <div class="link-name">${c.name}</div>
+              <div class="muted">${c.class || ''} ${c.level} ур. · ${c.player || ''}</div>
+            </div>
+            <a class="btn" href="/p/${encodeURIComponent(c.player_token)}" target="_blank">Лист персонажа</a>
+          </div>`).join('');
+      } catch (e) {}
+    }
+    refresh();
+    setInterval(refresh, 3000);
+  </script>
+</body>
+</html>

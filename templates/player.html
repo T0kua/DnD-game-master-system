@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лист персонажа — D&D</title>
+  <link rel="stylesheet" href="/static/player.css">
+  <link rel="stylesheet" href="/static/wiki.css">
+</head>
+<body>
+  <div class="app-shell player-page">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">⚔</span>
+        <span>D&amp;D</span>
+      </div>
+      <div id="campaign-name" class="topbar-note muted"></div>
+    </header>
+
+    <main class="page">
+      <div id="wiki-page">
+        <div id="wiki-view"></div>
+      </div>
+      <!-- Невалидная ссылка -->
+      <div id="invalid" class="player-landing hidden">
+        <div class="brand-large">⚔</div>
+        <h1>Ссылка недействительна</h1>
+        <p>Попросите мастера выдать новую ссылку на ваш лист персонажа.</p>
+      </div>
+
+      <!-- Сам лист -->
+      <div id="sheet" class="hidden">
+        <section class="profile-hero">
+          <div id="avatar" class="avatar avatar-xl">?</div>
+          <div class="profile-title">
+            <div class="eyebrow">ПЕРСОНАЖ</div>
+            <h1 id="char-name">…</h1>
+            <p id="char-sub" class="muted"></p>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>❤️ Здоровье</h2>
+              <strong id="hp-text">—</strong>
+            </div>
+            <div class="progress progress-large">
+              <div id="hp-bar" class="progress-fill"></div>
+            </div>
+            <div class="temp-hp">
+              Временные HP: <strong id="temp-hp">0</strong>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading"><h2>📊 Базовые параметры</h2></div>
+            <div class="stats-3">
+              <div class="metric"><span>КД</span><strong id="stat-ac">—</strong></div>
+              <div class="metric"><span>Уровень</span><strong id="stat-level">—</strong></div>
+              <div class="metric"><span>Мастерство</span><strong id="stat-prof">—</strong></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-heading"><h2>📈 Характеристики</h2></div>
+          <div id="abilities-grid" class="abilities-grid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading"><h2>🛡 Спасброски</h2></div>
+          <div id="saves-grid" class="saves-grid"></div>
+        </section>
+
+        <section class="player-section" data-collapse-section>
+          <button class="player-section-title" data-collapse type="button">
+            <span>🎯 Навыки</span>
+            <span class="collapse-arrow">⌄</span>
+          </button>
+          <div class="collapsible-content">
+            <div id="skills-list" class="skills-list"></div>
+          </div>
+        </section>
+
+        <section id="weapons-section" class="player-section hidden" data-collapse-section>
+          <button class="player-section-title" data-collapse type="button">
+            <span>⚔ Владение оружием</span>
+            <span class="collapse-arrow">⌄</span>
+          </button>
+          <div class="collapsible-content">
+            <div id="weapons-list" class="tag-list"></div>
+          </div>
+        </section>
+
+        <section id="spells-section" class="player-section hidden" data-collapse-section>
+          <button class="player-section-title" data-collapse type="button">
+            <span>✨ Способности и заклинания</span>
+            <span class="collapse-arrow">⌄</span>
+          </button>
+          <div class="collapsible-content">
+            <div id="spells-list" class="spell-list"></div>
+          </div>
+        </section>
+
+        <section id="resources-section" class="player-section hidden" data-collapse-section>
+          <button class="player-section-title" data-collapse type="button">
+            <span>🔮 Ресурсы</span>
+            <span class="collapse-arrow">⌄</span>
+          </button>
+          <div class="collapsible-content">
+            <div id="resources-list" class="resource-list"></div>
+          </div>
+        </section>
+
+        <section id="inventory-section" class="player-section hidden" data-collapse-section>
+          <button class="player-section-title" data-collapse type="button">
+            <span>🎒 Инвентарь</span>
+            <span class="collapse-arrow">⌄</span>
+          </button>
+          <div class="collapsible-content">
+            <div id="inventory-list" class="item-list"></div>
+          </div>
+        </section>
+
+        <section id="notes-section" class="panel hidden">
+          <div class="panel-heading"><h2>📝 Заметки</h2></div>
+          <div id="notes-text" class="notes-text"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="conn-dot" class="conn-dot" title="Соединение"></div>
+
+  <script>window.PLAYER_TOKEN = {{ token|tojson }};</script>
+  <script src="/static/wiki.js"></script>
+  <script src="/static/player.js"></script>
+</body>
+</html>
